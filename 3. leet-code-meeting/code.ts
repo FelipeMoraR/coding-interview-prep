@@ -10,37 +10,49 @@ function maxFreeTime(eventTime: number, startTime: number[], endTime: number[]):
     const timeLine = new Array();
     for (let i = 0; i <= eventTime; i++) {
         if(!startTime[i] && timeLine.length < eventTime) {
-            timeLine.push('free')
+            timeLine.push(null)
             continue;
         }
 
         if(i === 0 && startTime[i] !== 0) {
             let freeFirstTime = startTime[i];
             while (freeFirstTime > 0) {
-                timeLine.push('free');
+                timeLine.push(null);
                 freeFirstTime = freeFirstTime - 1
             }
         }
 
         let durationMeet = endTime[i] - startTime[i];
         while (durationMeet > 0) {
-            timeLine.push('meet');
+            timeLine.push(i);
             durationMeet = durationMeet - 1
         }
         let freeSpaceToTheNextMeet = startTime[i + 1] - endTime[i];
         while (freeSpaceToTheNextMeet > 0) {
-            timeLine.push('free')
+            timeLine.push(null)
             freeSpaceToTheNextMeet -= 1;
         }
     }
-
-    console.log(timeLine);
-    console.log(timeLine.length);
-
-    return 0
+    console.log(timeLine)
+    const maxFreeTime = calculateMaxFreeTime(0, timeLine)
+    return maxFreeTime
 };
 
+function calculateMaxFreeTime(maxSpaces: number = 0, array: Array<number | null>, meetToRelocate: number = 0): number {
+    const meetFound = array.find(meet => meet === meetToRelocate) 
+    if (!meetFound) {
+        console.log('era la wea')
+        return maxSpaces
+    }
+
+    
+
+
+    return 0
+}
+
 maxFreeTime(10, [2,6], [3,8])
+
 
 
  
